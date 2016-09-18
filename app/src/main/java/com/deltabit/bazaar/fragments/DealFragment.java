@@ -52,8 +52,8 @@ public class DealFragment extends Fragment implements LoaderManager.LoaderCallba
     public static final int COL_STATE = 7;
 
 
-    private RecyclerView mRecyclerView;
-    private DealAdapter mDealAdapter;
+    protected RecyclerView mRecyclerView;
+    protected DealAdapter mDealAdapter;
 
     public DealFragment() {
     }
@@ -87,7 +87,7 @@ public class DealFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mDealAdapter.swapCursor(data);
-        DatabaseUtils.dumpCursor(data);
+//          DatabaseUtils.dumpCursor(data);
     }
 
     @Override
@@ -118,6 +118,7 @@ public class DealFragment extends Fragment implements LoaderManager.LoaderCallba
 
 
         Intent i = new Intent(getContext(),DetailActivity.class);
+        i.putExtra(DetailActivity.TYPE_KEY,DetailActivity.TYPE_VIEW_ITEM);
         i.putExtra(DealAdapter.ITEM_ID_EXTRA_KEY,vh.mItem_Id);
         startActivity(i);
     }

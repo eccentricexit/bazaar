@@ -3,24 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.deltabit.bazaar.CadastroActivity">
 
+
     <LinearLayout
-        android:orientation="vertical"
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="top"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cadastro de usuário"
+            android:textSize="25dp"
+            android:layout_marginBottom="40dp"
+            />
 
         <EditText
             android:id="@+id/txtUsername"
-            android:hint="Username"
+            android:hint="@string/user_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/txtPassword"
-            android:hint="Senha"
+            android:hint="@string/password_label"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            />
 
         <Button
             android:text="Cadastrar"
@@ -28,6 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+
     </LinearLayout>
+
 
 </FrameLayout>

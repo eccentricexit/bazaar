@@ -38,4 +38,19 @@
             android:text="@string/empty_deal_list" />
 
     </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp"
+        app:elevation="6dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+
+        android:id="@+id/add_item_fab"
+        android:src="@drawable/fab_plus"
+
+        android:layout_width="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
+        android:baselineAlignBottom="false" />
 </RelativeLayout>

@@ -26,5 +26,9 @@
     <string name="bazaar">Bazaar</string>
     <string name="row_updated_label">Edição salva.</string>
     <string name="item_bought_message">Item comprado!</string>
+    <string name="price_label">Preço</string>
+    <string name="quantity_label">Quantidade</string>
+    <string name="name_label">Nome:</string>
+    <string name="vender">Confirmar Venda</string>
 
 </resources>

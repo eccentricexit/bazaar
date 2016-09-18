@@ -9,14 +9,23 @@ public class Utility {
     public static int userId;
 
     public static int getArtResourceForDeal(int imageId) {
-        int id;
+        int id = 0;
 
         switch(imageId){
+            case 0:
+                id = R.drawable.ic_dress;
+                break;
             case 1:
                 id = R.drawable.ic_shoe;
                 break;
-            default:
-                id = R.drawable.ic_shirt;
+            case 2:
+                id = R.drawable.ic_jacket;
+                break;
+            case 3:
+                id = R.drawable.ic_sunglasses;
+                break;
+            case 4:
+                id = R.drawable.ic_short;
                 break;
         }
 

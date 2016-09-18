@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.deltabit.bazaar.data.BazaarContract;
 import com.deltabit.bazaar.fragments.DealFragment;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Created by rigel on 17-Sep-16.
  */
@@ -27,7 +30,6 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealAdapterVie
     private final View mEmptyView;
     private Cursor mCursor;
     private static RecyclerViewClickListener mItemListener;
-
 
 
     public DealAdapter(Context context, RecyclerViewClickListener itemListener,View emptyView) {
@@ -84,12 +86,15 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealAdapterVie
         mCursor.moveToPosition(position);
         int imageId = mCursor.getInt(DealFragment.COL_IMAGE_ID);
         int defaultImage = Utility.getArtResourceForDeal(imageId);
-
         holder.mItem_Id = mCursor.getInt(DealFragment.COL_DEAL_ID);
-
         holder.mNameView.setText(mCursor.getString(DealFragment.COL_ITEM_NAME));
-        holder.mPriceView.setText(mCursor.getString(DealFragment.COL_ITEM_PRICE));
         holder.mIconView.setImageResource(defaultImage);
+
+        float price = Float.valueOf(mCursor.getString(DealFragment.COL_ITEM_PRICE));
+        NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
+
+        String strPrice = currencyInstance.format(price);
+        holder.mPriceView.setText(strPrice);
     }
 
     @Override

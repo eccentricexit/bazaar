@@ -13,7 +13,7 @@ import com.deltabit.bazaar.data.BazaarContract.DealEntry;
  */
 public class BazaarDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     static final String DATABASE_NAME = "bazaar.db";
 
     public BazaarDbHelper(Context context) {
@@ -65,17 +65,18 @@ public class BazaarDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_DEAL_TABLE);
 
         //INSERINDO VALORES FALSOS
-        insertCategory("camisetas",sqLiteDatabase);
-        insertCategory("calçados", sqLiteDatabase);
+        insertCategory("roupas",sqLiteDatabase);
+        insertCategory("acessórios", sqLiteDatabase);
+        insertCategory("eletrônicos", sqLiteDatabase);
 
         insertUser("joao","spock",sqLiteDatabase);
         insertUser("pedro","yoda",sqLiteDatabase);
 
-        insertDeal(sqLiteDatabase,0,0,0,"Camiseta Desbotada","49.00","1",0);
-        insertDeal(sqLiteDatabase,1,0,0,"Camiseta Velha","39.00","1",0);
-        insertDeal(sqLiteDatabase,0,0,0,"Camiseta Rasgada","29.00","1",0);
-        insertDeal(sqLiteDatabase,1,1,1,"Sapato Mordido","1.00","1",0);
-        insertDeal(sqLiteDatabase,0,1,1,"Tênis Sujo","4.00","1",0);
+        insertDeal(sqLiteDatabase,0,0,0,"Vestido Vermelho","49.00","1",0);
+        insertDeal(sqLiteDatabase,1,1,0,"Sapato Bonito","39.00","1",0);
+        insertDeal(sqLiteDatabase,0,2,0,"Jaqueta Preta","29.00","1",0);
+        insertDeal(sqLiteDatabase,1,3,1,"Óculos Wayfarer","1.00","1",0);
+        insertDeal(sqLiteDatabase,0,4,0,"Shorts Xadrez","4.00","1",0);
 
     }
 
