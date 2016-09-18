@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Bazaar</string>
+
+    <!--Shared preferences-->
+    <string name="user_id_resource">user_id_resource</string>
+
+
+    <!--Content provider-->
+    <string name="content_authority">com.deltabit.bazaar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_deal_list">Nenhum item disponível.</string>
+
+    <!--Detail Activity-->
+    <string name="deletar">Deletar</string>
+    <string name="confirmar">Salvar</string>
+    <string name="comprar">Comprar</string>
+
+    <!--Login activity-->
+    <string name="user_not_registered_label">Ainda não é cadastrado?</string>
+    <string name="login_label">Login</string>
+    <string name="user_label">Usuário</string>
+    <string name="password_label">Senha</string>
+
+    <string name="bazaar">Bazaar</string>
+    <string name="row_updated_label">Edição salva.</string>
+    <string name="item_bought_message">Item comprado!</string>
+
+</resources>
