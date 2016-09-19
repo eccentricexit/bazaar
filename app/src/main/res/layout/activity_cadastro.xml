@@ -8,43 +8,40 @@
 
 
     <LinearLayout
-        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="top"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:layout_marginTop="70dp"
         android:gravity="center"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cadastro de usuário"
-            android:textSize="25dp"
             android:layout_marginBottom="40dp"
-            />
+            android:text="@string/register_user_label"
+            android:textSize="25sp" />
 
         <EditText
             android:id="@+id/txtUsername"
-            android:hint="@string/user_label"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/user_label" />
 
         <EditText
             android:id="@+id/txtPassword"
-            android:hint="@string/password_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            />
+            android:hint="@string/password_label"
+            android:inputType="textPassword" />
 
         <Button
-            android:text="Cadastrar"
-            android:onClick="btnCadastrar_onClick"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:onClick="btnCadastrar_onClick"
+            android:text="@string/register_button_label" />
 
 
     </LinearLayout>

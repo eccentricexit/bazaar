@@ -3,10 +3,9 @@ package com.deltabit.bazaar;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,23 +25,18 @@ public class DetailActivity extends AppCompatActivity {
     public static final String TYPE_KEY = "type";
 
     int mItemId;
+    int activityType;
     private Cursor mItemCursor;
     private Cursor mCategories;
-
     private ImageView mItemImage;
-
     private EditText mTxtItemName;
     private EditText mTxtItemPrice;
     private EditText mTxtQuantity;
-
     private Spinner mSpnCategory;
-
     private Button mBtnDelete;
     private Button mBtnUpdate;
     private Button mBtnBuy;
     private Button mBtnSell;
-
-    int activityType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +44,18 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         setup();
 
-        activityType = getIntent().getIntExtra(TYPE_KEY,-1);
+        activityType = getIntent().getIntExtra(TYPE_KEY, -1);
 
-        if(activityType==TYPE_VIEW_ITEM) {
+        if (activityType == TYPE_VIEW_ITEM) {
             mItemId = getIntent().getIntExtra(DealAdapter.ITEM_ID_EXTRA_KEY, -1);
             setupViewItem();
-        }else{
+        } else {
             mBtnSell.setVisibility(View.VISIBLE);
+            mItemImage.setImageResource(Utility.getArtResourceForDeal(-1));
         }
     }
 
-    private void setup(){
+    private void setup() {
         mItemImage = (ImageView) findViewById(R.id.list_item_icon);
         mTxtItemName = (EditText) findViewById(R.id.list_item_name_textview);
         mTxtItemPrice = (EditText) findViewById(R.id.list_item_price_textview);
@@ -98,11 +93,11 @@ public class DetailActivity extends AppCompatActivity {
         mTxtQuantity.setFocusable(isAuthor);
 
         mSpnCategory.setEnabled(isAuthor);
-        if(isAuthor) {
+        if (isAuthor) {
             mBtnDelete.setVisibility(View.VISIBLE);
             mBtnUpdate.setVisibility(View.VISIBLE);
             mBtnBuy.setVisibility(View.GONE);
-        }else{
+        } else {
             mBtnDelete.setVisibility(View.GONE);
             mBtnUpdate.setVisibility(View.GONE);
             mBtnBuy.setVisibility(View.VISIBLE);
@@ -112,9 +107,9 @@ public class DetailActivity extends AppCompatActivity {
 //        Toast.makeText(DetailActivity.this, mItemCursor.getString(DealFragment.COL_ITEM_NAME), Toast.LENGTH_SHORT).show();
     }
 
-    private void loadSpinner(){
-        String[] adapterCols=new String[]{BazaarContract.CategoryEntry.COLUMN_CATEGORY_NAME};
-        int[] adapterRowViews=new int[]{android.R.id.text1};
+    private void loadSpinner() {
+        String[] adapterCols = new String[]{BazaarContract.CategoryEntry.COLUMN_CATEGORY_NAME};
+        int[] adapterRowViews = new int[]{android.R.id.text1};
 
         Uri uri = BazaarContract.CategoryEntry.CONTENT_URI;
 
@@ -131,7 +126,7 @@ public class DetailActivity extends AppCompatActivity {
         mSpnCategory.setAdapter(sca);
     }
 
-    private void setValues(){
+    private void setValues() {
         int categoryId = mItemCursor.getInt(DealFragment.COL_CATEGORY_KEY);
         mSpnCategory.setSelection(categoryId);
 
@@ -148,19 +143,19 @@ public class DetailActivity extends AppCompatActivity {
                 .delete(BazaarContract.DealEntry.CONTENT_URI,
                         BazaarProvider.sDealByIdSelection,
                         new String[]{String.valueOf(mItemId)}
-                        );
+                );
 
         finish();
     }
 
     public void btnUpdate_onClick(View view) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_NAME,mTxtItemName.getText().toString());
-        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_QUANTITY,mTxtQuantity.getText().toString());
-        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_PRICE,mTxtItemPrice.getText().toString());
+        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_NAME, mTxtItemName.getText().toString());
+        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_QUANTITY, mTxtQuantity.getText().toString());
+        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_PRICE, mTxtItemPrice.getText().toString());
 
         long spinnerSelectedItem = mSpnCategory.getSelectedItemPosition();
-        contentValues.put(BazaarContract.DealEntry.COLUMN_CATEGORY_KEY,spinnerSelectedItem);
+        contentValues.put(BazaarContract.DealEntry.COLUMN_CATEGORY_KEY, spinnerSelectedItem);
 
         getContentResolver()
                 .update(BazaarContract.DealEntry.CONTENT_URI,
@@ -174,7 +169,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void btnBuy_onClick(View view) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(BazaarContract.DealEntry.COLUMN_STATE,1);
+        contentValues.put(BazaarContract.DealEntry.COLUMN_STATE, 1);
 
         getContentResolver()
                 .update(BazaarContract.DealEntry.CONTENT_URI,
@@ -190,16 +185,16 @@ public class DetailActivity extends AppCompatActivity {
     public void btnSell_onClick(View view) {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(BazaarContract.DealEntry.COLUMN_USER_KEY,Utility.userId);
-        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_NAME,mTxtItemName.getText().toString());
-        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_QUANTITY,mTxtQuantity.getText().toString());
-        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_PRICE,mTxtItemPrice.getText().toString());
-        contentValues.put(BazaarContract.DealEntry.COLUMN_STATE,0);
+        contentValues.put(BazaarContract.DealEntry.COLUMN_USER_KEY, Utility.userId);
+        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_NAME, mTxtItemName.getText().toString());
+        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_QUANTITY, mTxtQuantity.getText().toString());
+        contentValues.put(BazaarContract.DealEntry.COLUMN_ITEM_PRICE, mTxtItemPrice.getText().toString());
+        contentValues.put(BazaarContract.DealEntry.COLUMN_STATE, 0);
 
         long spinnerSelectedItem = mSpnCategory.getSelectedItemPosition();
-        contentValues.put(BazaarContract.DealEntry.COLUMN_CATEGORY_KEY,spinnerSelectedItem);
+        contentValues.put(BazaarContract.DealEntry.COLUMN_CATEGORY_KEY, spinnerSelectedItem);
 
-        contentValues.put(BazaarContract.DealEntry.COLUMN_IMAGE_ID,spinnerSelectedItem);
+        contentValues.put(BazaarContract.DealEntry.COLUMN_IMAGE_ID, spinnerSelectedItem);
 
         getContentResolver()
                 .insert(BazaarContract.DealEntry.CONTENT_URI,

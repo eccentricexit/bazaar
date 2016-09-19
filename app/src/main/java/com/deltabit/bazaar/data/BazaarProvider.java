@@ -7,63 +7,67 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.deltabit.bazaar.data.BazaarContract.CategoryEntry;
 import com.deltabit.bazaar.data.BazaarContract.DealEntry;
 import com.deltabit.bazaar.data.BazaarContract.UserEntry;
-import com.deltabit.bazaar.data.BazaarContract.CategoryEntry;
 
 /**
  * Created by rigel on 16-Sep-16.
  */
 public class BazaarProvider extends ContentProvider {
 
-    // The URI Matcher used by this content provider.
-    private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private static final String LOG_TAG = BazaarProvider.class.getClass().getSimpleName();
-
-
-    private BazaarDbHelper mOpenHelper;
-
+    //user.username = ? AND user.password = ?
+    public static final String sUserSelection =
+            UserEntry.TABLE_NAME + "." + UserEntry.COLUMN_USERNAME + " = ? AND " +
+                    UserEntry.COLUMN_PASSWORD + " = ?";
+    //category.name = ?
+    public static final String sCategorySelection =
+            CategoryEntry.TABLE_NAME + "." + CategoryEntry.COLUMN_CATEGORY_NAME + " = ?";
+    //deal.user_key = ?
+    public static final String sDealByUserSelection =
+            DealEntry.TABLE_NAME + "." + DealEntry.COLUMN_USER_KEY + " = ?";
+    //deal.category_key = ?
+    public static final String sDealByCategorySelection =
+            DealEntry.TABLE_NAME + "." + DealEntry.COLUMN_CATEGORY_KEY + " = ?";
+    //deal._id = ?
+    public static final String sDealByIdSelection =
+            DealEntry.TABLE_NAME + "._id = ?";
+    //deal.state = ?
+    public static final String sDealByStateSelection =
+            DealEntry.TABLE_NAME + "." + DealEntry.COLUMN_STATE + " = ?";
     static final int USER = 100;
     static final int CATEGORY = 101;
     static final int DEAL = 102;
-
     static final int USER_WITH_LOGIN_AND_PASSWORD = 103;
     static final int CATEGORY_WITH_NAME = 104;
     static final int DEAL_WITH_CATEGORY = 105;
     static final int DEAL_WITH_USER_ID = 106;
     static final int DEAL_WITH_ID = 107;
+    // The URI Matcher used by this content provider.
+    private static final UriMatcher sUriMatcher = buildUriMatcher();
+    private static final String LOG_TAG = BazaarProvider.class.getClass().getSimpleName();
+    private BazaarDbHelper mOpenHelper;
 
+    static UriMatcher buildUriMatcher() {
 
-    //user.username = ? AND user.password = ?
-    public static final String sUserSelection =
-            UserEntry.TABLE_NAME+"."+ UserEntry.COLUMN_USERNAME + " = ? AND " +
-                    UserEntry.COLUMN_PASSWORD+" = ?"
-            ;
+        final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+        final String authority = BazaarContract.CONTENT_AUTHORITY;
 
-    //category.name = ?
-    public static final String sCategorySelection =
-            CategoryEntry.TABLE_NAME+"."+ CategoryEntry.COLUMN_CATEGORY_NAME + " = ?";
+        // For each type of URI you want to add, create a corresponding code.
+        matcher.addURI(authority, BazaarContract.PATH_USER, USER);
+        matcher.addURI(authority, BazaarContract.PATH_USER + "/*/*", USER_WITH_LOGIN_AND_PASSWORD);
 
-    //deal.user_key = ?
-    public static final String sDealByUserSelection=
-            DealEntry.TABLE_NAME+"."+DealEntry.COLUMN_USER_KEY + " = ?";
+        matcher.addURI(authority, BazaarContract.PATH_CATEGORY, CATEGORY);
+        matcher.addURI(authority, BazaarContract.PATH_CATEGORY + "/*", CATEGORY_WITH_NAME);
 
-    //deal.category_key = ?
-    public static final String sDealByCategorySelection =
-            DealEntry.TABLE_NAME+"."+DealEntry.COLUMN_CATEGORY_KEY+" = ?";
+        matcher.addURI(authority, BazaarContract.PATH_DEAL, DEAL);
+        matcher.addURI(authority, BazaarContract.PATH_DEAL + "/#", DEAL_WITH_ID);
 
-    //deal._id = ?
-    public static final String sDealByIdSelection =
-            DealEntry.TABLE_NAME+"._id = ?";
-
-    //deal.state = ?
-    public static final String sDealByStateSelection =
-            DealEntry.TABLE_NAME+"."+DealEntry.COLUMN_STATE+" = ?";
-
-
+        return matcher;
+    }
 
     private Cursor getUserByLoginAndPassword(Uri uri, String[] projection, String sortOrder) {
 
@@ -76,7 +80,7 @@ public class BazaarProvider extends ContentProvider {
         return queryBuilder.query(mOpenHelper.getReadableDatabase(),
                 projection,
                 sUserSelection,
-                new String[]{user  ,password},
+                new String[]{user, password},
                 null,
                 null,
                 sortOrder
@@ -91,7 +95,7 @@ public class BazaarProvider extends ContentProvider {
         queryBuilder.setTables(
                 DealEntry.TABLE_NAME + " INNER JOIN " +
                         UserEntry.TABLE_NAME +
-                        " ON " + DealEntry.TABLE_NAME +"." + DealEntry.COLUMN_USER_KEY +
+                        " ON " + DealEntry.TABLE_NAME + "." + DealEntry.COLUMN_USER_KEY +
                         " = " + UserEntry.TABLE_NAME +
                         "." + UserEntry._ID);
 
@@ -116,7 +120,7 @@ public class BazaarProvider extends ContentProvider {
         queryBuilder.setTables(
                 DealEntry.TABLE_NAME + " INNER JOIN " +
                         CategoryEntry.TABLE_NAME +
-                        " ON " + DealEntry.TABLE_NAME +"." + DealEntry.COLUMN_CATEGORY_KEY +
+                        " ON " + DealEntry.TABLE_NAME + "." + DealEntry.COLUMN_CATEGORY_KEY +
                         " = " + CategoryEntry.TABLE_NAME +
                         "." + CategoryEntry._ID);
 
@@ -165,24 +169,6 @@ public class BazaarProvider extends ContentProvider {
         );
     }
 
-    static UriMatcher buildUriMatcher() {
-
-        final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = BazaarContract.CONTENT_AUTHORITY;
-
-        // For each type of URI you want to add, create a corresponding code.
-        matcher.addURI(authority, BazaarContract.PATH_USER, USER);
-        matcher.addURI(authority, BazaarContract.PATH_USER +"/*/*", USER_WITH_LOGIN_AND_PASSWORD);
-
-        matcher.addURI(authority, BazaarContract.PATH_CATEGORY, CATEGORY);
-        matcher.addURI(authority, BazaarContract.PATH_CATEGORY + "/*",CATEGORY_WITH_NAME );
-
-        matcher.addURI(authority, BazaarContract.PATH_DEAL, DEAL);
-        matcher.addURI(authority, BazaarContract.PATH_DEAL + "/#", DEAL_WITH_ID);
-
-        return matcher;
-    }
-
     @Override
     public boolean onCreate() {
         mOpenHelper = new BazaarDbHelper(getContext());
@@ -190,7 +176,7 @@ public class BazaarProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
@@ -217,16 +203,16 @@ public class BazaarProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         Cursor retCursor;
 
         //O switch vai definir qual o tipo de requisição
         int matched = sUriMatcher.match(uri);
-        Log.v(LOG_TAG,String.valueOf(matched));
+        Log.v(LOG_TAG, String.valueOf(matched));
         switch (matched) {
 
-            case CATEGORY:{
+            case CATEGORY: {
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         CategoryEntry.TABLE_NAME,
                         projection,
@@ -239,7 +225,7 @@ public class BazaarProvider extends ContentProvider {
                 break;
             }
 
-            case USER:{
+            case USER: {
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         UserEntry.TABLE_NAME,
                         projection,
@@ -267,8 +253,7 @@ public class BazaarProvider extends ContentProvider {
             }
 
             //User
-            case USER_WITH_LOGIN_AND_PASSWORD:
-            {
+            case USER_WITH_LOGIN_AND_PASSWORD: {
                 retCursor = getUserByLoginAndPassword(uri, projection, sortOrder);
                 break;
             }
@@ -280,8 +265,8 @@ public class BazaarProvider extends ContentProvider {
             }
 
             //Negócio por id
-            case DEAL_WITH_ID:{
-                retCursor = getDealByID(uri,projection,sortOrder);
+            case DEAL_WITH_ID: {
+                retCursor = getDealByID(uri, projection, sortOrder);
                 break;
             }
 
@@ -306,15 +291,15 @@ public class BazaarProvider extends ContentProvider {
 
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         Uri returnUri;
 
         switch (match) {
             case USER: {
-                long _id = db.insert(UserEntry.TABLE_NAME,null,values);
-                if ( _id > 0 )
+                long _id = db.insert(UserEntry.TABLE_NAME, null, values);
+                if (_id > 0)
                     returnUri = UserEntry.buildUserUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -322,8 +307,8 @@ public class BazaarProvider extends ContentProvider {
             }
 
             case CATEGORY: {
-                long _id = db.insert(CategoryEntry.TABLE_NAME,null,values);
-                if ( _id > 0 )
+                long _id = db.insert(CategoryEntry.TABLE_NAME, null, values);
+                if (_id > 0)
                     returnUri = CategoryEntry.buildCategoryUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -331,8 +316,8 @@ public class BazaarProvider extends ContentProvider {
             }
 
             case DEAL: {
-                long _id = db.insert(DealEntry.TABLE_NAME,null,values);
-                if ( _id > 0 )
+                long _id = db.insert(DealEntry.TABLE_NAME, null, values);
+                if (_id > 0)
                     returnUri = DealEntry.buildDealUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -348,13 +333,13 @@ public class BazaarProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowsDeleted;
 
         //Isto faz deletar todas as linhas e retornar o número de linhas deletadas
-        if ( selection == null) selection = "1";
+        if (selection == null) selection = "1";
 
         switch (match) {
             case USER:
@@ -384,7 +369,7 @@ public class BazaarProvider extends ContentProvider {
 
     @Override
     public int update(
-            Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+            @NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowsUpdated;

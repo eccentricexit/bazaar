@@ -1,13 +1,10 @@
 package com.deltabit.bazaar.fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -16,10 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.deltabit.bazaar.CadastroActivity;
 import com.deltabit.bazaar.DealAdapter;
 import com.deltabit.bazaar.DetailActivity;
 import com.deltabit.bazaar.R;
@@ -32,7 +26,8 @@ import com.deltabit.bazaar.data.BazaarProvider;
  */
 public class SellFragment extends DealFragment {
 
-    public SellFragment() {}
+    public SellFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +44,7 @@ public class SellFragment extends DealFragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), DetailActivity.class);
-                i.putExtra(DetailActivity.TYPE_KEY,DetailActivity.TYPE_REGISTER_NEW_ITEM);
+                i.putExtra(DetailActivity.TYPE_KEY, DetailActivity.TYPE_REGISTER_NEW_ITEM);
                 startActivity(i);
             }
         });

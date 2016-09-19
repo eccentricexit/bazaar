@@ -1,7 +1,5 @@
 package com.deltabit.bazaar;
 
-import android.database.Cursor;
-
 /**
  * Created by rigel on 17-Sep-16.
  */
@@ -11,7 +9,10 @@ public class Utility {
     public static int getArtResourceForDeal(int imageId) {
         int id = 0;
 
-        switch(imageId){
+        switch (imageId) {
+            case -1:
+                id = R.drawable.ic_logo_icon;
+                break;
             case 0:
                 id = R.drawable.ic_dress;
                 break;

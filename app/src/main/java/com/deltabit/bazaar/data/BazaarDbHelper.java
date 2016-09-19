@@ -1,20 +1,20 @@
 package com.deltabit.bazaar.data;
 
 import android.content.Context;
-
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.deltabit.bazaar.data.BazaarContract.UserEntry;
 import com.deltabit.bazaar.data.BazaarContract.CategoryEntry;
 import com.deltabit.bazaar.data.BazaarContract.DealEntry;
+import com.deltabit.bazaar.data.BazaarContract.UserEntry;
+
 /**
  * Created by rigel on 16-Sep-16.
  */
 public class BazaarDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 5;
     static final String DATABASE_NAME = "bazaar.db";
+    private static final int DATABASE_VERSION = 1;
 
     public BazaarDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -64,20 +64,22 @@ public class BazaarDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_USER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_DEAL_TABLE);
 
-        //INSERINDO VALORES FALSOS
-        insertCategory("roupas",sqLiteDatabase);
+        insertDummyValues(sqLiteDatabase);
+    }
+
+    private void insertDummyValues(SQLiteDatabase sqLiteDatabase) {
+        insertCategory("roupas", sqLiteDatabase);
         insertCategory("acessórios", sqLiteDatabase);
         insertCategory("eletrônicos", sqLiteDatabase);
 
-        insertUser("joao","spock",sqLiteDatabase);
-        insertUser("pedro","yoda",sqLiteDatabase);
+        insertUser("joao", "spock", sqLiteDatabase);
+        insertUser("pedro", "yoda", sqLiteDatabase);
 
-        insertDeal(sqLiteDatabase,0,0,0,"Vestido Vermelho","49.00","1",0);
-        insertDeal(sqLiteDatabase,1,1,0,"Sapato Bonito","39.00","1",0);
-        insertDeal(sqLiteDatabase,0,2,0,"Jaqueta Preta","29.00","1",0);
-        insertDeal(sqLiteDatabase,1,3,1,"Óculos Wayfarer","1.00","1",0);
-        insertDeal(sqLiteDatabase,0,4,0,"Shorts Xadrez","4.00","1",0);
-
+        insertDeal(sqLiteDatabase, 0, 0, 0, "Vestido Vermelho", "49.00", "1", 0);
+        insertDeal(sqLiteDatabase, 1, 1, 0, "Sapato Bonito", "39.00", "1", 0);
+        insertDeal(sqLiteDatabase, 0, 2, 0, "Jaqueta Preta", "29.00", "1", 0);
+        insertDeal(sqLiteDatabase, 1, 3, 1, "Óculos Wayfarer", "1.00", "1", 0);
+        insertDeal(sqLiteDatabase, 0, 4, 0, "Shorts Xadrez", "4.00", "1", 0);
     }
 
     private void insertDeal(SQLiteDatabase sqLiteDatabase,
@@ -89,25 +91,25 @@ public class BazaarDbHelper extends SQLiteOpenHelper {
                             String quantity,
                             int state) {
 
-        String SQL = "INSERT INTO deal VALUES (null,"+userKey+","
-                +imageID+","
-                +categoryKey+",'"
-                +name+"',"
-                +price+","
-                +quantity+","
-                +state+")";
+        String SQL = "INSERT INTO deal VALUES (null," + userKey + ","
+                + imageID + ","
+                + categoryKey + ",'"
+                + name + "',"
+                + price + ","
+                + quantity + ","
+                + state + ")";
 
         sqLiteDatabase.execSQL(SQL);
     }
 
 
     private void insertUser(String username, String password, SQLiteDatabase sqLiteDatabase) {
-        String SQL = "INSERT INTO user VALUES (null,'"+username+"','"+password+"')";
+        String SQL = "INSERT INTO user VALUES (null,'" + username + "','" + password + "')";
         sqLiteDatabase.execSQL(SQL);
     }
 
     private void insertCategory(String name, SQLiteDatabase sqLiteDatabase) {
-        String SQL = "INSERT INTO category VALUES (null,'"+name+"')";
+        String SQL = "INSERT INTO category VALUES (null,'" + name + "')";
         sqLiteDatabase.execSQL(SQL);
     }
 

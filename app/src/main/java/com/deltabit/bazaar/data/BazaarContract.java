@@ -22,7 +22,7 @@ public class BazaarContract {
     public static final String PATH_CATEGORY = "category";
 
     //Classe interna para definir a tabela usuario
-    public static final class UserEntry implements BaseColumns{
+    public static final class UserEntry implements BaseColumns {
 
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
@@ -52,7 +52,7 @@ public class BazaarContract {
     }
 
     //Tabela Categoria
-    public static final class CategoryEntry implements BaseColumns{
+    public static final class CategoryEntry implements BaseColumns {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_CATEGORY).build();
 
@@ -73,13 +73,13 @@ public class BazaarContract {
         }
 
         public static Uri buildCategory(String category) {
-            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_CATEGORY_NAME,category).build();
+            return CONTENT_URI.buildUpon().appendQueryParameter(COLUMN_CATEGORY_NAME, category).build();
         }
 
     }
 
     //Tabela Negócios (ou Deal)
-    public static final class DealEntry implements BaseColumns{
+    public static final class DealEntry implements BaseColumns {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_DEAL).build();
 
@@ -103,18 +103,18 @@ public class BazaarContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildDealUriWithState(int state){
+        public static Uri buildDealUriWithState(int state) {
             return CONTENT_URI.buildUpon()
-                    .appendQueryParameter(COLUMN_STATE,String.valueOf(state)).build();
+                    .appendQueryParameter(COLUMN_STATE, String.valueOf(state)).build();
         }
 
-        public static Uri buildDealUriWithDealId(int dealId){
+        public static Uri buildDealUriWithDealId(int dealId) {
             return ContentUris.withAppendedId(CONTENT_URI, dealId);
         }
 
         public static Uri buildDealUriWithUserId(int userId) {
             return CONTENT_URI.buildUpon()
-                    .appendQueryParameter(COLUMN_USER_KEY,String.valueOf(userId)).build();
+                    .appendQueryParameter(COLUMN_USER_KEY, String.valueOf(userId)).build();
         }
 
         public static String getIdFromDealUri(Uri uri) {
@@ -123,7 +123,7 @@ public class BazaarContract {
 
         public static Uri buildDealUriByCategory(int categoryId) {
             return CONTENT_URI.buildUpon()
-                    .appendQueryParameter(COLUMN_CATEGORY_KEY,String.valueOf(categoryId)).build();
+                    .appendQueryParameter(COLUMN_CATEGORY_KEY, String.valueOf(categoryId)).build();
         }
     }
 

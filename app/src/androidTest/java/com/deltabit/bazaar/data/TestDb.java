@@ -29,7 +29,7 @@ public class TestDb extends AndroidTestCase {
 
         //Constroi um hashset de todas as tabelas (incluindo a de metadados)
 
-        final HashSet<String> tableNameHashSet = new HashSet<String>();
+        final HashSet<String> tableNameHashSet = new HashSet<>();
         tableNameHashSet.add(BazaarContract.UserEntry.TABLE_NAME);
         tableNameHashSet.add(BazaarContract.CategoryEntry.TABLE_NAME);
         tableNameHashSet.add(BazaarContract.DealEntry.TABLE_NAME);
@@ -48,7 +48,7 @@ public class TestDb extends AndroidTestCase {
         // verificar que as tabelas foram criadas
         do {
             tableNameHashSet.remove(c.getString(0));
-        } while( c.moveToNext() );
+        } while (c.moveToNext());
 
         //Se isto falhar é porque não temos as tabelas na base.
         assertTrue("Error: a base foi criada sem as tabelas.",
@@ -62,7 +62,7 @@ public class TestDb extends AndroidTestCase {
                 c.moveToFirst());
 
         // Build a HashSet of all of the column names we want to look for
-        final HashSet<String> locationColumnHashSet = new HashSet<String>();
+        final HashSet<String> locationColumnHashSet = new HashSet<>();
         locationColumnHashSet.add(BazaarContract.UserEntry._ID);
         locationColumnHashSet.add(BazaarContract.UserEntry.COLUMN_USERNAME);
         locationColumnHashSet.add(BazaarContract.UserEntry.COLUMN_PASSWORD);
@@ -72,12 +72,13 @@ public class TestDb extends AndroidTestCase {
         do {
             String columnName = c.getString(columnNameIndex);
             locationColumnHashSet.remove(columnName);
-        } while(c.moveToNext());
+        } while (c.moveToNext());
 
         // Se isto falhar é porque não a tabela usuário não possui todas as colunas
         assertTrue("Error",
                 locationColumnHashSet.isEmpty());
         db.close();
+        c.close();
     }
 
     public void testUserTable() {
@@ -109,11 +110,11 @@ public class TestDb extends AndroidTestCase {
                 null
         );
 
-        assertTrue( "Error: Nenhum registro retornado :(", cursor.moveToFirst() );
+        assertTrue("Error: Nenhum registro retornado :(", cursor.moveToFirst());
 
         //Verificar se apenas um registro existia
-        assertFalse( "Error: Mais de um registro retornou do teste query",
-                cursor.moveToNext() );
+        assertFalse("Error: Mais de um registro retornado do teste query. PS.:Comente a linha insertDummyValues() da classe BazaarDbHelper.",
+                cursor.moveToNext());
 
 
         cursor.close();

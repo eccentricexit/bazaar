@@ -3,10 +3,10 @@ package com.deltabit.bazaar.fragments;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -28,8 +28,15 @@ import com.deltabit.bazaar.data.BazaarProvider;
  */
 public class DealFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, DealAdapter.RecyclerViewClickListener {
 
-    private static final int DEAL_LOADER = 0;
-
+    // These indices are tied to DEAL_COLUMNS_COLUMNS.  If DEAL_COLUMNS changes, these must change
+    public static final int COL_DEAL_ID = 0;
+    public static final int COL_USER_KEY = 1;
+    public static final int COL_IMAGE_ID = 2;
+    public static final int COL_CATEGORY_KEY = 3;
+    public static final int COL_ITEM_NAME = 4;
+    public static final int COL_ITEM_PRICE = 5;
+    public static final int COL_ITEM_QUANTITY = 6;
+    public static final int COL_STATE = 7;
     protected static final String[] DEAL_COLUMNS = {
             BazaarContract.DealEntry.TABLE_NAME + "." + BazaarContract.DealEntry._ID,
             BazaarContract.DealEntry.COLUMN_USER_KEY,
@@ -40,18 +47,7 @@ public class DealFragment extends Fragment implements LoaderManager.LoaderCallba
             BazaarContract.DealEntry.COLUMN_ITEM_QUANTITY,
             BazaarContract.DealEntry.COLUMN_STATE
     };
-
-    // These indices are tied to DEAL_COLUMNS_COLUMNS.  If DEAL_COLUMNS changes, these must change
-    public static final int COL_DEAL_ID = 0;
-    public static final int COL_USER_KEY = 1;
-    public static final int COL_IMAGE_ID = 2;
-    public static final int COL_CATEGORY_KEY = 3;
-    public static final int COL_ITEM_NAME = 4;
-    public static final int COL_ITEM_PRICE = 5;
-    public static final int COL_ITEM_QUANTITY = 6;
-    public static final int COL_STATE = 7;
-
-
+    private static final int DEAL_LOADER = 0;
     protected RecyclerView mRecyclerView;
     protected DealAdapter mDealAdapter;
 
@@ -75,7 +71,6 @@ public class DealFragment extends Fragment implements LoaderManager.LoaderCallba
                 new String[]{String.valueOf(0)},
                 null);
     }
-
 
 
     @Override
@@ -116,10 +111,17 @@ public class DealFragment extends Fragment implements LoaderManager.LoaderCallba
 //        Toast.makeText(getContext(), "Recycler Item clicked", Toast.LENGTH_SHORT).show();
 //        Toast.makeText(getContext(), "DealFragment: id:"+ vh.mItem_Id+", position: "+position, Toast.LENGTH_SHORT).show();
 
+        Bundle bundle = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(
+                        getActivity(),
+                        vh.mIconView,
+                        getString(R.string.item_image_transition)
+                ).toBundle();
 
-        Intent i = new Intent(getContext(),DetailActivity.class);
-        i.putExtra(DetailActivity.TYPE_KEY,DetailActivity.TYPE_VIEW_ITEM);
-        i.putExtra(DealAdapter.ITEM_ID_EXTRA_KEY,vh.mItem_Id);
-        startActivity(i);
+
+        Intent i = new Intent(getContext(), DetailActivity.class);
+        i.putExtra(DetailActivity.TYPE_KEY, DetailActivity.TYPE_VIEW_ITEM);
+        i.putExtra(DealAdapter.ITEM_ID_EXTRA_KEY, vh.mItem_Id);
+        startActivity(i, bundle);
     }
 }

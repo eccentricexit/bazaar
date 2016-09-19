@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
         //Skip login if user has already logged in once
         mSharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
-        int userId = mSharedPreferences.getInt(getString(R.string.user_id_resource),-1);
-        if(userId!=-1) {
+        int userId = mSharedPreferences.getInt(getString(R.string.user_id_resource), -1);
+        if (userId != -1) {
             Utility.userId = userId;
             startActivity(new Intent(this, MainActivity.class));
         }
@@ -42,40 +42,41 @@ public class LoginActivity extends AppCompatActivity {
         mTxtPassword.setText("spock");
     }
 
-    public void btnLogin_click(View view){
+    public void btnLogin_click(View view) {
         String username = mTxtUsername.getText().toString();
         String password = mTxtPassword.getText().toString();
 
 
-        if(authenticateUser(username,password)){
-            startActivity(new Intent(this,MainActivity.class));
-            mSharedPreferences.edit().putInt(getString(R.string.user_id_resource),userId);
+        if (authenticateUser(username, password)) {
+            startActivity(new Intent(this, MainActivity.class));
             Utility.userId = userId;
-        }else{
+        } else {
             Toast.makeText(LoginActivity.this, "Tente novamente.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void btnCadastrar_onClick(View view){
-        startActivity(new Intent(this,CadastroActivity.class));
+    public void btnCadastrar_onClick(View view) {
+        startActivity(new Intent(this, CadastroActivity.class));
     }
 
-    boolean authenticateUser(String username, String password){
+    boolean authenticateUser(String username, String password) {
         Cursor result = getContentResolver().query(
                 BazaarContract.UserEntry.CONTENT_URI,
                 null,
                 BazaarProvider.sUserSelection,
-                new String[]{username,password},
+                new String[]{username, password},
                 null
         );
 
-        if(result.getCount()==0){
+        if (result.getCount() == 0) {
+            result.close();
             return false;
-        }else{
+        } else {
             result.moveToFirst();
             int idColumnIndex = result.getColumnIndex(BazaarContract.UserEntry._ID);
             userId = result.getInt(idColumnIndex);
-            mSharedPreferences.edit().putInt(getString(R.string.user_id_resource),userId).commit();
+            mSharedPreferences.edit().putInt(getString(R.string.user_id_resource), userId).apply();
+            result.close();
             return true;
         }
     }

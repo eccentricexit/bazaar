@@ -1,10 +1,9 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root"
     tools:context="com.deltabit.bazaar.fragments.DealFragment">
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -40,17 +39,18 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.FloatingActionButton
-        app:fabSize="normal"
-        app:pressedTranslationZ="12dp"
-        app:elevation="6dp"
+        android:id="@+id/add_item_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
 
-        android:id="@+id/add_item_fab"
-        android:src="@drawable/fab_plus"
+        android:layout_margin="26dp"
+        android:baselineAlignBottom="false"
 
-        android:layout_width="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_height="wrap_content"
-        android:baselineAlignBottom="false" />
+        android:src="@drawable/fab_plus"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp" />
 </RelativeLayout>

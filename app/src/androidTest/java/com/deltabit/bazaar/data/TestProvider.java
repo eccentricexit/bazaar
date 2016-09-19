@@ -6,19 +6,17 @@ import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.test.AndroidTestCase;
-import android.util.Log;
 
 import com.deltabit.bazaar.TestUtilities;
-import com.deltabit.bazaar.data.BazaarContract.UserEntry;
 import com.deltabit.bazaar.data.BazaarContract.CategoryEntry;
 import com.deltabit.bazaar.data.BazaarContract.DealEntry;
+import com.deltabit.bazaar.data.BazaarContract.UserEntry;
 
 /**
  * Created by rigel on 16-Sep-16.
  */
-public class TestProvider extends AndroidTestCase{
+public class TestProvider extends AndroidTestCase {
     public static final String LOG_TAG = TestProvider.class.getSimpleName();
 
     @Override
@@ -55,7 +53,7 @@ public class TestProvider extends AndroidTestCase{
                 null,
                 null
         );
-        assertEquals("Error: registros não foram deletados da tabela "+DealEntry.TABLE_NAME, 0, cursor.getCount());
+        assertEquals("Error: registros não foram deletados da tabela " + DealEntry.TABLE_NAME, 0, cursor.getCount());
         cursor.close();
 
         cursor = mContext.getContentResolver().query(
@@ -65,7 +63,7 @@ public class TestProvider extends AndroidTestCase{
                 null,
                 null
         );
-        assertEquals("Error: registros não foram deletados da tabela "+UserEntry.TABLE_NAME, 0, cursor.getCount());
+        assertEquals("Error: registros não foram deletados da tabela " + UserEntry.TABLE_NAME, 0, cursor.getCount());
         cursor.close();
 
         cursor = mContext.getContentResolver().query(
@@ -75,13 +73,13 @@ public class TestProvider extends AndroidTestCase{
                 null,
                 null
         );
-        assertEquals("Error: registros não foram deletados da tabela "+CategoryEntry.TABLE_NAME, 0, cursor.getCount());
+        assertEquals("Error: registros não foram deletados da tabela " + CategoryEntry.TABLE_NAME, 0, cursor.getCount());
         cursor.close();
 
 
     }
 
-    public void deleteAllRecords(){
+    public void deleteAllRecords() {
         deleteAllRecordsFromProvider();
     }
 
@@ -127,7 +125,7 @@ public class TestProvider extends AndroidTestCase{
         ContentValues testValues = TestUtilities.createUserValues();
         long rowId = TestUtilities.insertUserValues(mContext);
 
-        assertTrue("Error: inserção falhou.",rowId!=0);
+        assertTrue("Error: inserção falhou.", rowId != 0);
 
         // Verificar o conteúdo query
         Cursor userCursor = mContext.getContentResolver().query(
@@ -140,21 +138,15 @@ public class TestProvider extends AndroidTestCase{
         // Verificar se temos o cursor correto
         TestUtilities.validateCursor("testBasicUserQueries, user query", userCursor, testValues);
 
-        userCursor = mContext.getContentResolver().query(
-                UserEntry.CONTENT_URI,
-                null,
-                null,
-                null,
-                null
-        );
+        userCursor.close();
     }
 
-    public void testBasicCategoryQuery(){
+    public void testBasicCategoryQuery() {
         // inserir valores na base de dados
         ContentValues testValues = TestUtilities.createCategoryValues();
         long rowId = TestUtilities.insertCategoryValues(mContext);
 
-        assertTrue("Error: inserção falhou.",rowId!=0);
+        assertTrue("Error: inserção falhou.", rowId != 0);
 
         // Verificar o conteúdo query
         Cursor categoryCursor = mContext.getContentResolver().query(
@@ -169,22 +161,22 @@ public class TestProvider extends AndroidTestCase{
     }
 
 
-    public void testBasicDealQuery(){
+    public void testBasicDealQuery() {
         // inserir valores na base de dados
         BazaarDbHelper dbHelper = new BazaarDbHelper(mContext);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues categoryValues = TestUtilities.createCategoryValues();
         long categoryRowId = TestUtilities.insertCategoryValues(mContext);
-        assertTrue("Error: inserção falhou.",categoryRowId!=-1);
+        assertTrue("Error: inserção falhou.", categoryRowId != -1);
 
         ContentValues userValues = TestUtilities.createUserValues();
         long userRowId = TestUtilities.insertUserValues(mContext);
-        assertTrue("Error: inserção falhou.",userRowId!=-1);
+        assertTrue("Error: inserção falhou.", userRowId != -1);
 
-        ContentValues dealValues = TestUtilities.createDealValues(userRowId,categoryRowId);
-        long dealRowId = db.insert(DealEntry.TABLE_NAME,null,dealValues);
-        assertTrue("Error: inserção falhou.",dealRowId!=-1);
+        ContentValues dealValues = TestUtilities.createDealValues(userRowId, categoryRowId);
+        long dealRowId = db.insert(DealEntry.TABLE_NAME, null, dealValues);
+        assertTrue("Error: inserção falhou.", dealRowId != -1);
 
         db.close();
 

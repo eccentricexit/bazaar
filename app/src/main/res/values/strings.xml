@@ -30,5 +30,11 @@
     <string name="quantity_label">Quantidade</string>
     <string name="name_label">Nome:</string>
     <string name="vender">Confirmar Venda</string>
+    <string name="item_image_transition">itemTransition</string>
+    <string name="register_user_label">Cadastro de usuário</string>
+    <string name="register_button_label">Cadastrar</string>
+    <string name="content_description_logo">Bazaar Logo</string>
+    <string name="product_image_description">Product Image</string>
+    <string name="product_thumbnail">Product Thumbnail</string>
 
 </resources>

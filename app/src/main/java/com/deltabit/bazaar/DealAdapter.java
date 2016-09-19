@@ -1,23 +1,17 @@
 package com.deltabit.bazaar;
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.AbstractWindowedCursor;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.deltabit.bazaar.data.BazaarContract;
 import com.deltabit.bazaar.fragments.DealFragment;
 
 import java.text.NumberFormat;
-import java.util.Locale;
 
 /**
  * Created by rigel on 17-Sep-16.
@@ -25,44 +19,16 @@ import java.util.Locale;
 public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealAdapterViewHolder> {
 
     public static final String ITEM_ID_EXTRA_KEY = "item_id";
-
+    private static RecyclerViewClickListener mItemListener;
     private final Context mContext;
     private final View mEmptyView;
     private Cursor mCursor;
-    private static RecyclerViewClickListener mItemListener;
 
 
-    public DealAdapter(Context context, RecyclerViewClickListener itemListener,View emptyView) {
+    public DealAdapter(Context context, RecyclerViewClickListener itemListener, View emptyView) {
         mContext = context;
         mItemListener = itemListener;
         mEmptyView = emptyView;
-    }
-
-    public class DealAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
-        public final ImageView mIconView;
-        public final TextView mNameView;
-        public final TextView mPriceView;
-        public int mItem_Id;
-
-        public DealAdapterViewHolder(View itemView) {
-            super(itemView);
-
-            mIconView = (ImageView) itemView.findViewById(R.id.list_item_icon);
-            mNameView = (TextView) itemView.findViewById(R.id.list_item_name_textview);
-            mPriceView = (TextView) itemView.findViewById(R.id.list_item_price_textview);
-
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            mItemListener.recyclerViewListClicked(this, getPosition());
-        }
-    }
-
-    public interface RecyclerViewClickListener {
-        void recyclerViewListClicked(DealAdapterViewHolder vh,int id);
     }
 
     public void swapCursor(Cursor newCursor) {
@@ -70,7 +36,6 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealAdapterVie
         notifyDataSetChanged();
         mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
-
 
     @Override
     public DealAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -99,8 +64,35 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealAdapterVie
 
     @Override
     public int getItemCount() {
-        if ( null == mCursor ) return 0;
+        if (null == mCursor) return 0;
         return mCursor.getCount();
+    }
+
+    public interface RecyclerViewClickListener {
+        void recyclerViewListClicked(DealAdapterViewHolder vh, int id);
+    }
+
+    public class DealAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public final ImageView mIconView;
+        public final TextView mNameView;
+        public final TextView mPriceView;
+        public int mItem_Id;
+
+        public DealAdapterViewHolder(View itemView) {
+            super(itemView);
+
+            mIconView = (ImageView) itemView.findViewById(R.id.list_item_icon);
+            mNameView = (TextView) itemView.findViewById(R.id.list_item_name_textview);
+            mPriceView = (TextView) itemView.findViewById(R.id.list_item_price_textview);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mItemListener.recyclerViewListClicked(this, getPosition());
+        }
     }
 
 }
