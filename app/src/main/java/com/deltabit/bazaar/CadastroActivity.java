@@ -32,6 +32,7 @@ public class CadastroActivity extends AppCompatActivity {
         userValues.put(BazaarContract.UserEntry.COLUMN_PASSWORD, password);
 
         Uri uri = getContentResolver().insert(BazaarContract.UserEntry.CONTENT_URI, userValues);
-        Toast.makeText(CadastroActivity.this, uri.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(CadastroActivity.this, "Cadastro efetuado,", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

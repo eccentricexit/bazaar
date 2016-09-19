@@ -12,6 +12,7 @@
         android:layout_height="200dp"
         android:background="@color/white"
         android:contentDescription="@string/product_image_description"
+        android:elevation="6dp"
         android:scaleType="fitCenter"
         android:transitionName="@string/item_image_transition" />
 

@@ -38,8 +38,8 @@ public class LoginActivity extends AppCompatActivity {
         mTxtPassword = (EditText) findViewById(R.id.txtPassword);
 
         //testValues
-        mTxtUsername.setText("joao");
-        mTxtPassword.setText("spock");
+//        mTxtUsername.setText("joao");
+//        mTxtPassword.setText("spock");
     }
 
     public void btnLogin_click(View view) {
