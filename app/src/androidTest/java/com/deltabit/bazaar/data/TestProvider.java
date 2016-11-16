@@ -115,7 +115,7 @@ public class TestProvider extends AndroidTestCase {
         type = mContext.getContentResolver().getType(
                 CategoryEntry.buildCategory(testCategory));
         // vnd.android.cursor.dir/com.deltabit.bazaar/category/
-        assertEquals("Error: the CategoryEntry CONTENT_URI with name should return WeatherEntry.CONTENT_TYPE",
+        assertEquals("Error: the CategoryEntry CONTENT_URI with name should return CategoryEntry.CONTENT_TYPE",
                 CategoryEntry.CONTENT_TYPE, type);
     }
 
