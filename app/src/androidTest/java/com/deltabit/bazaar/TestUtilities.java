@@ -92,15 +92,15 @@ public class TestUtilities extends AndroidTestCase {
 
     public static ContentValues createDealValues(long userRowId, long categoryRowId) {
 
-        ContentValues weatherValues = new ContentValues();
-        weatherValues.put(BazaarContract.DealEntry.COLUMN_USER_KEY, userRowId);
-        weatherValues.put(BazaarContract.DealEntry.COLUMN_CATEGORY_KEY, categoryRowId);
-        weatherValues.put(BazaarContract.DealEntry.COLUMN_IMAGE_ID, TEST_IMAGE_ID);
-        weatherValues.put(BazaarContract.DealEntry.COLUMN_ITEM_NAME, TEST_ITEM_NAME);
-        weatherValues.put(BazaarContract.DealEntry.COLUMN_ITEM_QUANTITY, TEST_ITEM_QUANTITY);
-        weatherValues.put(BazaarContract.DealEntry.COLUMN_ITEM_PRICE, TEST_ITEM_PRICE);
-        weatherValues.put(BazaarContract.DealEntry.COLUMN_STATE, TEST_ITEM_STATE);
+        ContentValues dealValues = new ContentValues();
+        dealValues.put(BazaarContract.DealEntry.COLUMN_USER_KEY, userRowId);
+        dealValues.put(BazaarContract.DealEntry.COLUMN_CATEGORY_KEY, categoryRowId);
+        dealValues.put(BazaarContract.DealEntry.COLUMN_IMAGE_ID, TEST_IMAGE_ID);
+        dealValues.put(BazaarContract.DealEntry.COLUMN_ITEM_NAME, TEST_ITEM_NAME);
+        dealValues.put(BazaarContract.DealEntry.COLUMN_ITEM_QUANTITY, TEST_ITEM_QUANTITY);
+        dealValues.put(BazaarContract.DealEntry.COLUMN_ITEM_PRICE, TEST_ITEM_PRICE);
+        dealValues.put(BazaarContract.DealEntry.COLUMN_STATE, TEST_ITEM_STATE);
 
-        return weatherValues;
+        return dealValues;
     }
 }
