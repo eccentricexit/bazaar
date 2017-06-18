@@ -9,7 +9,11 @@ This app demonstrates de implementation of the following features:
 - [Uri Matchers](https://developer.android.com/reference/android/content/UriMatcher.html)
 
 ## Screenshots
-_TODO_
-
+![](https://raw.githubusercontent.com/mtsalenc/bazaar/master/screenshots/Screenshot_1497738147.png)
+![](https://raw.githubusercontent.com/mtsalenc/bazaar/master/screenshots/Screenshot_1497738168.png)
+![](https://raw.githubusercontent.com/mtsalenc/bazaar/master/screenshots/Screenshot_1497738178.png)
+![](https://raw.githubusercontent.com/mtsalenc/bazaar/master/screenshots/Screenshot_1497738198.png)
+![](https://raw.githubusercontent.com/mtsalenc/bazaar/master/screenshots/Screenshot_1497738227.png)
+![](https://raw.githubusercontent.com/mtsalenc/bazaar/master/screenshots/Screenshot_1497738234.png)
 ## License
 This project is licensed under the MIT License
