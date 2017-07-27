@@ -1,5 +1,5 @@
 # Bazaar App
-This is an Android app built for education purposes.
+This is an Android app built to study content providers and databases
 ## Features
 This app demonstrates de implementation of the following features:
 - [Content Providers](https://developer.android.com/guide/topics/providers/content-providers.html)
